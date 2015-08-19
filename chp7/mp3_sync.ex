@@ -34,7 +34,7 @@ defmodule Mp3Sync do
   end
 
   defp decode_header(<<0b11111111111::size(11), b::size(2), c::size(2),
-                     _D::size(1), e::size(4), f::size(2), g::size(1), bits::size(9)>>) do
+                     _d::size(1), e::size(4), f::size(2), g::size(1), bits::size(9)>>) do
     vsn = case b do
             0 -> {2, 5}
             1 -> :erlang.exit(:bad_vsn)
@@ -47,7 +47,7 @@ defmodule Mp3Sync do
               2 -> 2
               3 -> 1
     end
-    ## protection = D
+
     bit_rate = bitrate(vsn, layer, e) * 1000
     sample_rate = samplerate(vsn, f)
     padding = g
