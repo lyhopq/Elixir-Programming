@@ -1,0 +1,12 @@
+#!/usr/bin/env elixir
+defmodule Factorial do
+  def main([arg]) do
+    n = arg |> String.to_integer
+    IO.puts "factirial #{n} = #{fac(n)}"
+  end
+
+  def fac(0), do: 1
+  def fac(n), do: n * fac(n-1)
+end
+
+Factorial.main System.argv

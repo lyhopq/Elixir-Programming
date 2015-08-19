@@ -1,0 +1,6 @@
+#!/usr/bin/env elixir
+defmodule Hello do
+  def main, do: IO.puts "Hello world"
+end
+
+Hello.main
