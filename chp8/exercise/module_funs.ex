@@ -20,7 +20,7 @@ defmodule ModuleFuns do
   defp modele_funs do
     :code.all_loaded
     |> Enum.map fn {mod, _} ->
-      {mod, apply(mod, :module_info, [])
+      {mod, mod.module_info
        |> List.first |> elem(1)}
       end
   end
