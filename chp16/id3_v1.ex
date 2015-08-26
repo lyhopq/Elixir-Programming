@@ -1,9 +1,9 @@
 defmodule IDv1 do
   require Libmisc
-  require :lib_find
+  require Libfind
 
   def dir(dir_) do
-    files = :lib_find.files(dir_, '*.mp3', true)
+    files = Libfind.files(dir_, "*.mp3", true)
     |> Enum.map(fn file -> {file, read_id3_tag(file)} end)
     |> Enum.filter(fn {_, :error} -> false
                       _ -> true end

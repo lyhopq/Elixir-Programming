@@ -2,7 +2,7 @@ defmodule Libfind do
   require Record
   Record.defrecordp :file_info, Record.extract(:file_info, from_lib: "kernel/include/file.hrl")
 
-  def files(dir, re, flag) do
+  def files(dir, re, flag \\ true) do
     {:ok, rel} = re
     |> to_char_list
     |> :xmerl_regexp.sh_to_awk
