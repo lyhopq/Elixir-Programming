@@ -82,4 +82,31 @@ defmodule SocketExamples do
     spawn(fn -> par_connect(listen) end)
     loop(socket)
   end
+
+  def error_test do
+    spawn(&error_test_server/0)
+    :timer.sleep(2000)
+    {:ok, socket} = :gen_tcp.connect('localhost', 4321, [:binary, {:packet, 2}])
+    IO.puts "connected to" #{inspect socket}
+    :gen_tcp.send(socket, "123")
+    receive do
+      any ->
+        IO.puts "Any = #{inspect any}"
+    end
+  end
+
+  defp error_test_server do
+    {:ok, listen} = :gen_tcp.listen(4321, [:binary, {:packet, 2}])
+    {:ok, socket} = :gen_tcp.accept(listen)
+    error_test_server_loop(socket)
+  end
+
+  defp error_test_server_loop(socket) do
+    receive do
+      {:tcp, ^socket, data} ->
+        IO.puts "received: #{inspect data}"
+        _ = :erlang.atom_to_list(data)
+        error_test_server_loop(socket)
+    end
+  end
 end
